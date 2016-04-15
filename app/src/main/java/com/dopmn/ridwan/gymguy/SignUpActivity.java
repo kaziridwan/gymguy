@@ -49,6 +49,8 @@ public class SignUpActivity extends AppCompatActivity {
                         //save user data in firebase and persistent storage
                         Firebase ref = new Firebase("https://gymguy.firebaseio.com");
                         ref.child("users").child(uid).child("count").setValue(0);
+                        ref.child("users").child(uid).child("negativeCount").setValue(0);
+                        ref.child("users").child(uid).child("email").setValue(emailString);
 
                         SharedPreferences sharedPref = context.getSharedPreferences(
                                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);

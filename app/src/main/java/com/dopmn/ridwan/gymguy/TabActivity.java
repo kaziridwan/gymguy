@@ -1,6 +1,9 @@
 package com.dopmn.ridwan.gymguy;
 
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -8,6 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import com.firebase.client.Firebase;
 
 
 public class TabActivity extends AppCompatActivity {
@@ -47,6 +54,29 @@ public class TabActivity extends AppCompatActivity {
 
             }
         });
+        Button logoutButton = (Button) findViewById(R.id.logoutButtonSecondary);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //for testing
+                Firebase ref = new Firebase("https://gymguy.firebaseio.com");
+
+                ref.unauth();
+
+                //remove uid
+                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("uid", "-");
+                editor.commit();
+
+                Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(goToNextActivity);
+            }
+        });
+
+    }
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override

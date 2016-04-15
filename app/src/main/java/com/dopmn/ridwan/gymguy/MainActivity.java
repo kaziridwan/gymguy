@@ -81,6 +81,12 @@ public class MainActivity extends ListeningActivity {
                 startActivity(goToNextActivity);
             }
         });
+        Button resetButton = (Button) findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                count=0;
+            }
+        });
         Button saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -118,6 +124,7 @@ public class MainActivity extends ListeningActivity {
                 System.out.println("the highest is : " + highest);
                 if(highest<=count){
                     ref.child("users").child(uid).child("count").setValue(count);
+                    ref.child("users").child(uid).child("negativeCount").setValue(-1*count);
                 }
 
 
@@ -163,4 +170,22 @@ public class MainActivity extends ListeningActivity {
         }
         restartListeningService();
     }
+
+
+//    @Override
+//    protected void onRest() {
+//
+//        String action = getIntent().getAction();
+//        // Prevent endless loop by adding a unique action, don't restart if action is present
+//        if(action == null || !action.equals("Already created")) {
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }
+//        // Remove the unique action so the next time onResume is called it will restart
+//        else
+//            getIntent().setAction(null);
+//
+//        super.onResume();
+//    }
 }

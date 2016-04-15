@@ -18,23 +18,26 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TabFragment2 extends Fragment {
 
     ArrayAdapter<String> adapter;
     ListView listView;
     ArrayList<String> values;
+    ArrayList<String> valuesProcessed;
     ArrayList<String> keysRef;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         values = new ArrayList<>();
+        valuesProcessed = new ArrayList<>();
         keysRef = new ArrayList<>();
         View tabOneView  = inflater.inflate(R.layout.tab_fragment_2, container, false);
 //        TextView textView = (TextView) tabOneView.findViewById(R.id.historyText);
 
         Firebase ref = new Firebase("https://gymguy.firebaseio.com/users");
-        Query queryRef = ref.orderByChild("count").limitToLast(5);
+        Query queryRef = ref.orderByChild("negativeCount").limitToLast(5);
 
 
         queryRef.addChildEventListener(new ChildEventListener() {
@@ -53,6 +56,7 @@ public class TabFragment2 extends Fragment {
                 String changedKey = dataSnapshot.getKey();
                 int changedIndex = keysRef.indexOf(changedKey);
                 values.set(changedIndex, dataSnapshot.getValue().toString());
+
                 updateListView();
             }
 
@@ -62,6 +66,7 @@ public class TabFragment2 extends Fragment {
                 int removedIndex = keysRef.indexOf(deletedKey);
                 keysRef.remove(removedIndex);
                 values.remove(removedIndex);
+
                 updateListView();
 
             }
