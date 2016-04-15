@@ -6,70 +6,65 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.dopmn.ridwan.gymguy.LoginActivity">
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Hop in!"
+        android:id="@+id/textView2"
+        android:layout_marginTop="62dp"
+        android:layout_centerHorizontal="true" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/loginRedButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="150dp"
+        android:text="Sign up"
+        android:id="@+id/signupButton"
         android:contextClickable="false"
-        android:background="@color/material_deep_teal_200" />
+        android:background="@color/material_deep_teal_200"
+        android:layout_above="@+id/textv"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/email"
+        android:id="@+id/signUpEmail"
         android:textAlignment="center"
-        android:layout_marginBottom="43dp"
-        android:layout_above="@+id/pass"
-        android:layout_alignLeft="@+id/pass"
-        android:layout_alignStart="@+id/pass"
-        android:hint="Email" />
+        android:hint="Email"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/pass"
-        android:layout_above="@+id/loginRedButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp"
+        android:id="@+id/signUpPass"
         android:hint="Password"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/signUpEmail"
+        android:layout_alignStart="@+id/signUpEmail" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="or"
-        android:id="@+id/textView2"
-        android:layout_marginTop="62dp"
-        android:layout_alignTop="@+id/loginRedButton"
+        android:id="@+id/textv"
+        android:layout_above="@+id/loginRedButton"
         android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up!"
-        android:id="@+id/signupRedButton"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Welcome to Gymguy!"
-        android:id="@+id/textView3"
-        android:textSize="30dp"
-        android:layout_alignParentTop="true"
+        android:text="Login!"
+        android:id="@+id/loginRedButton"
+        android:layout_marginBottom="44dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
