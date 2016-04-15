@@ -1,7 +1,9 @@
 package com.dopmn.ridwan.gymguy;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.speech.RecognitionListener;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,8 @@ import com.orm.SugarDb;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class MainActivity extends ListeningActivity {
@@ -66,6 +70,13 @@ public class MainActivity extends ListeningActivity {
 
                 ref.unauth();
 
+                //remove uid
+                SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("uid", "-");
+                editor.commit();
+
                 Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(goToNextActivity);
             }
@@ -86,7 +97,30 @@ public class MainActivity extends ListeningActivity {
                 String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 UserHistory newEntry = new UserHistory(count, timeStamp );
                 newEntry.save();
+
                 //  if highest, save on firebase
+                ArrayList<UserHistory> UserHistories = (ArrayList<UserHistory>) UserHistory.listAll(UserHistory.class);
+
+                int[] records = new int[UserHistories.size()];
+                 // for (UserHistory uh : UserHistories) {
+                for (int i = 0; i < UserHistories.size(); i++) {
+                    records[i] = UserHistories.get(i).count;
+                }
+
+                SharedPreferences sharedPref = context.getSharedPreferences(
+                        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                String  defaultValue = "-";
+                String uid = sharedPref.getString("uid", defaultValue);
+
+                Firebase ref = new Firebase("https://gymguy.firebaseio.com");
+                Arrays.sort(records);
+                int highest = records[records.length-1];
+                System.out.println("the highest is : " + highest);
+                if(highest<=count){
+                    ref.child("users").child(uid).child("count").setValue(count);
+                }
+
+
             }
         });
 

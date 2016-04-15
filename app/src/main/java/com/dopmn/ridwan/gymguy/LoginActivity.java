@@ -2,6 +2,7 @@ package com.dopmn.ridwan.gymguy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -47,6 +48,13 @@ public class LoginActivity extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+                        //save uid
+                        //remove uid
+                        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("uid", authData.getUid().toString());
+                        editor.commit();
 
                         Intent goToNextActivity = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(goToNextActivity);

@@ -2,6 +2,7 @@ package com.dopmn.ridwan.gymguy;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Map<String, Object> result) {
                         System.out.println("Successfully created user account with uid: " + result.get("uid"));
+                        String uid = result.get("uid").toString();
                         // there was an error
                         Context context = getApplicationContext();
                         CharSequence text = "Registration successful";
@@ -44,6 +46,17 @@ public class SignUpActivity extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+                        //save user data in firebase and persistent storage
+                        Firebase ref = new Firebase("https://gymguy.firebaseio.com");
+                        ref.child("users").child(uid).child("count").setValue(0);
+
+                        SharedPreferences sharedPref = context.getSharedPreferences(
+                                getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString("uid", uid);
+                        editor.commit();
+
+
 
                         Intent goToNextActivity = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(goToNextActivity);
